@@ -1,0 +1,51 @@
+# Helpful Tips for Course Completion
+
+> Source: infographic (IBM / Skills Network) provided as an image on the Coursera reading page. Transcribed here as text.
+
+## 1. Familiarize Yourself with the Course Content
+
+- Browse module overviews and objectives.
+- Understand topics and associated assets.
+- Familiarize yourself with the content order.
+- Identify upcoming topics.
+- Connect ideas to create a completion plan for the course.
+
+## 2. Form Your Plan and Make a Rough Timeline for Course Completion
+
+- Review completion time estimates for module assets.
+- Set reasonable time goal for each module.
+- Determine course completion deadline.
+- Schedule daily study time.
+
+## 3. Actively Manage Your Learning
+
+**Complete your independent tasks:**
+- Take notes during the course.
+- Download transcripts for reference.
+- Highlight important parts in transcripts.
+- Complete all labs.
+- Review terms using glossaries.
+
+**Get support:**
+- Actively participate in discussion forums.
+
+**Pass your quizzes:**
+- Review study notes.
+- Complete practice quizzes, review feedback.
+- Complete graded quizzes.
+- Review related videos or readings for incorrect answers.
+- Review video/transcript/reading for correct answers.
+- Retake quizzes until you pass them.
+
+## 4. Talk with Your Friends and Family About the Course
+
+- Stay accountable, commit to the course.
+- Talk to friends and family about it.
+- Engage in conversations about interesting topics.
+- Seek beneficial perspectives from others.
+
+## 5. Follow Your Plan
+
+- Stay motivated with your plan.
+- Set achievable goals in step 2.
+- Reward yourself upon achieving the goals.
