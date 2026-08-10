@@ -1,14 +1,27 @@
 # IBM RAG and Agentic AI — Study Notes
 
-Study notes for the Coursera course **Develop Generative AI Applications: Get Started**, part of IBM's *RAG and Agentic AI Professional Certificate*.
+Study notes for IBM's **RAG and Agentic AI Professional Certificate** (10 courses).
 
-## Index
+## Courses
+
+1. **[Develop Generative AI Applications: Get Started](01%20-%20Develop%20Generative%20AI%20Applications%20-%20Get%20Started/)**
+2. Build RAG Applications: Get Started
+3. Vector Databases for RAG: An Introduction
+4. Advanced RAG with Vector Databases and Retrievers
+5. Build Multimodal Generative AI Applications
+6. Fundamentals of Building AI Agents
+7. Agentic AI with LangChain and LangGraph
+8. Agentic AI with LangGraph, CrewAI, AutoGen and BeeAI
+9. Build AI Agents using MCP
+10. RAG and Agentic AI Capstone Project
+
+## Course 1: Develop Generative AI Applications: Get Started
 
 ### Module 1 - Foundations of Generative AI and Prompt Engineering
 
-- **01_Course Orientation**
-- **02_Introduction to Generative AI**
-- **03_Prompt Engineering and LangChain**
+- **01_Welcome to the Course**
+  - [01_Course Introduction.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/01_Welcome to the Course/01_Course Introduction.md>)
 - **Video Notes**
+  - [01_Course Introduction.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/Video Notes/01_Course Introduction.md>)
 
-_(Files will be linked here as notes are added.)_
+_(Index updated as notes are added.)_
