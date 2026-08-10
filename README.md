@@ -24,8 +24,12 @@ Study notes for IBM's **RAG and Agentic AI Professional Certificate** (10 course
   - [02_RAG and Agentic AI Professional Certificate Overview.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/01_Welcome to the Course/02_RAG and Agentic AI Professional Certificate Overview.md>)
   - [03_Course Overview.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/01_Welcome to the Course/03_Course Overview.md>)
   - [04_Helpful Tips for Course Completion.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/01_Welcome to the Course/04_Helpful Tips for Course Completion.md>)
+- **02_Generative AI Essentials**
+  - [01_About This Optional Lesson.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/02_Generative AI Essentials/01_About This Optional Lesson.md>)
+  - [02_Introduction to Generative AI.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/02_Generative AI Essentials/02_Introduction to Generative AI.md>)
 - **Video Notes**
   - [01_Course Introduction.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/Video Notes/01_Course Introduction.md>)
   - [02_RAG and Agentic AI Professional Certificate Overview.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/Video Notes/02_RAG and Agentic AI Professional Certificate Overview.md>)
+  - [03_Introduction to Generative AI.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/Video Notes/03_Introduction to Generative AI.md>)
 
 _(Index updated as notes are added.)_
