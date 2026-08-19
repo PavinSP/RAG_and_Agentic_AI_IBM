@@ -45,6 +45,7 @@ Study notes for IBM's **RAG and Agentic AI Professional Certificate** (10 course
 - **04_Module Summary and Evaluation**
   - [01_Foundations of Generative AI and Prompt Engineering.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/04_Module Summary and Evaluation/01_Foundations of Generative AI and Prompt Engineering.md>)
   - [02_Cheat Sheet: Foundations of Generative AI and LangChain.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/04_Module Summary and Evaluation/02_Cheat Sheet: Foundations of Generative AI and LangChain.md>)
+  - [03_Practice Quiz.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/04_Module Summary and Evaluation/03_Practice Quiz.md>)
 - **Video Notes**
   - [01_Course Introduction.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/Video Notes/01_Course Introduction.md>)
   - [02_RAG and Agentic AI Professional Certificate Overview.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/Video Notes/02_RAG and Agentic AI Professional Certificate Overview.md>)
