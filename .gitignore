@@ -4,6 +4,7 @@
 *.mkv
 *.avi
 .DS_Store
+._*
 Context.md
 **/Videos/*.txt
 **/Audio Notes/*.mp3
