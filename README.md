@@ -67,5 +67,6 @@ Study notes for IBM's **RAG and Agentic AI Professional Certificate** (10 course
 - **02_Module Summary and Evaluation**
   - [01_Summary and Highlights.md](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/02_Module Summary and Evaluation/01_Summary and Highlights.md>)
   - [02_Cheat Sheet.md](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/02_Module Summary and Evaluation/02_Cheat Sheet.md>)
+  - [03_Graded Quiz.md](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/02_Module Summary and Evaluation/03_Graded Quiz.md>)
 
 _(Index updated as notes are added.)_
