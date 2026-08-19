@@ -292,6 +292,38 @@ qa.invoke("what is this paper discussing?")
 
 `RetrievalQA` is a pre-built chain that wires together everything from Sections 6–10 into one call: given a question, it (1) uses the retriever to find relevant chunks, (2) combines them with the question into a prompt, (3) sends that to the LLM, and (4) returns the answer. This *is* what "RAG" (Retrieval-Augmented Generation) means in practice — the model's answer is "augmented" by real document content that was "retrieved" moments before, rather than relying purely on what the model happened to memorize during training.
 
+### Walking through `qa.invoke("what is this paper discussing?")` step by step
+
+Here's exactly what happens, in order, for the specific call used in this lab (`document` at this point in the notebook is the "Revolutionizing Mental Health Care through LangChain" paper, loaded from arXiv in Section 6):
+
+1. **Your question arrives as plain text.** `"what is this paper discussing?"` is the only input `.invoke()` receives — nothing else is attached to it yet.
+
+2. **The retriever embeds your question and searches.** `docsearch.as_retriever()` takes that question, runs it through the *same* embedding model used on the document chunks (Section 8), and gets back a vector — a point on the "meaning map." It then compares that point against every chunk's stored vector and picks the closest ones. Concretely, for this question, that probably surfaces chunks from the paper's abstract and introduction — the parts that describe *what the paper is about* — rather than, say, a chunk deep in the methodology section describing one specific experiment's numeric parameters, because "what is this paper discussing" is semantically closer to a big-picture summary than to a technical detail.
+
+3. **The retrieved chunks and your question get combined into one prompt.** With `chain_type="stuff"`, this is literal concatenation — something along the lines of:
+
+   ```
+   Use the following context to answer the question.
+
+   Context:
+   [chunk 1 text: e.g., part of the abstract about using LangChain for mental health support]
+   [chunk 2 text: e.g., part of the introduction about LLM-based conversational agents]
+   [chunk 3 text: ...]
+
+   Question: what is this paper discussing?
+   Answer:
+   ```
+
+   Notice the model has *not seen the whole paper* — only these few retrieved chunks, "stuffed" in alongside the question.
+
+4. **That whole combined prompt is sent to the LLM** (`llama_llm` in this lab). At this point, from the model's perspective, this is just an ordinary prompt like any other in Section 16/17 of Part 2 — it has no idea a "retrieval" step happened; it just sees a block of context text followed by a question, the same as if you'd pasted that text in yourself.
+
+5. **The model generates an answer using only what's in front of it**, something like: *"This paper discusses using the LangChain framework to build a large language model-based application for mental health support and care."* That answer is only possible because the actual paper content was sitting right there in the prompt (step 3) — the model wasn't trained on this specific 2024 arXiv paper, so without the retrieved context it would either say it doesn't have information about it, or (worse) guess and hallucinate a plausible-sounding but wrong summary.
+
+6. **`return_source_documents=False` means the answer comes back alone** — just the generated text, without also returning *which* chunks were used to produce it. Flip that to `True` and `qa.invoke(...)` would also hand you back the exact source chunks from step 2, letting you show the user "here's the passage this answer was based on" — useful for letting someone verify the answer rather than trust it blindly.
+
+The key thing this example should make click: at no point does the LLM "read the paper." It only ever reads whichever 3–4 small chunks the retriever decided were the closest match to your specific question — a different question earlier in the notebook (like a query about a specific method mentioned deep in the paper) would pull back *different* chunks, and the model would be working from an entirely different, much narrower slice of the source text.
+
 `chain_type="stuff"` names the strategy for combining retrieved chunks into the prompt: "stuff" means the simplest approach — just concatenate all the retrieved chunks together and stuff them into the prompt alongside the question. (Other chain types exist for when there are too many chunks to fit in one prompt at once, but "stuff" is the default starting point and what's used throughout this lab.)
 
 ## 12. Memory — `ChatMessageHistory` and `ConversationBufferMemory`
