@@ -38,6 +38,17 @@ qwen_template = PromptTemplate(
     input_variables=["system_prompt", "format_prompt", "user_prompt"],
 )
 
+# Plain version (no JSON formatting instructions) for the chat UI, which
+# expects conversational text in `response`, not the structured AIResponse schema.
+qwen_plain_template = PromptTemplate(
+    template=(
+        "<|im_start|>system\n{system_prompt}<|im_end|>\n"
+        "<|im_start|>user\n{user_prompt}<|im_end|>\n"
+        "<|im_start|>assistant\n"
+    ),
+    input_variables=["system_prompt", "user_prompt"],
+)
+
 
 def get_ai_response(model, template, system_prompt, user_prompt):
     chain = template | model | json_parser
@@ -48,9 +59,22 @@ def get_ai_response(model, template, system_prompt, user_prompt):
     })
 
 
+def get_plain_ai_response(model, template, system_prompt, user_prompt):
+    chain = template | model
+    return chain.invoke({"system_prompt": system_prompt, "user_prompt": user_prompt})
+
+
 def qwen_small_response(system_prompt, user_prompt):
     return get_ai_response(qwen_small_llm, qwen_template, system_prompt, user_prompt)
 
 
 def qwen_large_response(system_prompt, user_prompt):
     return get_ai_response(qwen_large_llm, qwen_template, system_prompt, user_prompt)
+
+
+def qwen_small_plain_response(system_prompt, user_prompt):
+    return get_plain_ai_response(qwen_small_llm, qwen_plain_template, system_prompt, user_prompt)
+
+
+def qwen_large_plain_response(system_prompt, user_prompt):
+    return get_plain_ai_response(qwen_large_llm, qwen_plain_template, system_prompt, user_prompt)

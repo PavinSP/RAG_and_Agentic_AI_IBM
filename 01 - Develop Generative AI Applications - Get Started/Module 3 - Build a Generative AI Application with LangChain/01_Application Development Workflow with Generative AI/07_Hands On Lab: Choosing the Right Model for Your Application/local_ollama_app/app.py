@@ -1,41 +1,44 @@
-from flask import Flask, request, jsonify
-from model import qwen_small_response, qwen_large_response
+import time
+from flask import Flask, request, jsonify, render_template
+from model import qwen_small_plain_response, qwen_large_plain_response
 
 app = Flask(__name__)
 
 MODEL_RESPONSE_FUNCS = {
-    "small": qwen_small_response,
-    "large": qwen_large_response,
+    "small": qwen_small_plain_response,
+    "large": qwen_large_plain_response,
 }
 
-# Matches model.py's AIResponse schema: summary, sentiment, category, action.
-SUPPORT_SYSTEM_PROMPT = (
-    "You are a customer support triage assistant. Given the customer's message, "
-    "summarize it, score its sentiment, classify its category (e.g. billing, "
-    "technical, general), and recommend the next action a support representative "
-    "should take."
+CHAT_SYSTEM_PROMPT = (
+    "You are an AI assistant helping with customer inquiries. "
+    "Provide a helpful and concise response."
 )
+
+
+@app.route("/", methods=["GET"])
+def index():
+    return render_template("index.html")
 
 
 @app.route("/generate", methods=["POST"])
 def generate():
-    data = request.get_json(force=True) or {}
-    user_prompt = data.get("prompt", "")
-    model_choice = data.get("model", "small")
+    data = request.json
+    user_message = data.get("message")
+    model = data.get("model")
 
-    if not user_prompt:
-        return jsonify({"error": "Missing 'prompt' in request body"}), 400
-    if model_choice not in MODEL_RESPONSE_FUNCS:
-        return jsonify({"error": f"Unknown model '{model_choice}', use 'small' or 'large'"}), 400
+    if not user_message or not model:
+        return jsonify({"error": "Missing message or model selection"}), 400
+    if model not in MODEL_RESPONSE_FUNCS:
+        return jsonify({"error": "Invalid model selection"}), 400
 
-    response_func = MODEL_RESPONSE_FUNCS[model_choice]
+    response_func = MODEL_RESPONSE_FUNCS[model]
+    start_time = time.time()
 
     try:
-        parsed = response_func(SUPPORT_SYSTEM_PROMPT, user_prompt)
-    except Exception as exc:
-        return jsonify({"error": "Model did not return valid JSON", "detail": str(exc)}), 502
-
-    return jsonify(parsed)
+        text = response_func(CHAT_SYSTEM_PROMPT, user_message)
+        return jsonify({"response": text, "duration": time.time() - start_time})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == "__main__":

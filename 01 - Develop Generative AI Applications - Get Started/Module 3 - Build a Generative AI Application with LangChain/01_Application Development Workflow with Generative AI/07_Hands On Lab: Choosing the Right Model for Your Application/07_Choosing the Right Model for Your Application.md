@@ -533,6 +533,205 @@ class AIResponse(BaseModel):
 
 > The exercise's target `AIResponse` also drops the `response` field in favor of `category` and `action` — matching the schema as given in the exercise text.
 
+## Enhancing Your Flask Application with AI Capabilities
+
+Now that the AI models are set up, they get integrated into the Flask application.
+
+### Step 1: Update `app.py`
+
+```python
+from flask import Flask, request, jsonify, render_template
+from model import llama_response, granite_response, mistral_response
+import time
+
+app = Flask(__name__)
+
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
+
+@app.route('/generate', methods=['POST'])
+def generate():
+    data = request.json
+    user_message = data.get('message')
+    model = data.get('model')
+
+    if not user_message or not model:
+        return jsonify({"error": "Missing message or model selection"}), 400
+
+    system_prompt = "You are an AI assistant helping with customer inquiries. Provide a helpful and concise response."
+
+    start_time = time.time()
+
+    try:
+        if model == 'llama':
+            result = llama_response(system_prompt, user_message)
+        elif model == 'granite':
+            result = granite_response(system_prompt, user_message)
+        elif model == 'mistral':
+            result = mistral_response(system_prompt, user_message)
+        else:
+            return jsonify({"error": "Invalid model selection"}), 400
+
+        result['duration'] = time.time() - start_time
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+- Imports the model-specific response functions.
+- The `/generate` route now expects JSON input with `message` and `model` fields.
+- Adds error handling for missing inputs.
+- Wraps AI processing in a try/except block to handle potential errors.
+- Measures and includes processing time (`duration`) in the response.
+
+This setup allows the app to handle requests for different models with robust error handling.
+
+### Step 2: Create `templates/index.html`
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body class="font-ibm-plex">
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <h1 class="header-title">AI Assistant</h1>
+                <button id="clearBtn" class="clear-btn" style="display: none;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="m3 6 18 0"></path>
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                    </svg>
+                    Clear Chat
+                </button>
+            </div>
+        </div>
+
+        <!-- Chat Container -->
+        <div class="chat-container">
+            <!-- Messages Area -->
+            <div class="messages-area">
+                <div class="messages-content">
+                    <!-- Welcome Screen -->
+                    <div id="welcomeScreen" class="welcome-screen">
+                        <div class="welcome-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                                <line x1="9" y1="9" x2="9.01" y2="9"/>
+                                <line x1="15" y1="9" x2="15.01" y2="9"/>
+                            </svg>
+                        </div>
+                        <h2 class="welcome-title">Welcome to AI Assistant</h2>
+                        <p class="welcome-text">Choose a model and start a conversation. I'm here to help with your questions and tasks.</p>
+                    </div>
+
+                    <!-- Messages Container -->
+                    <div id="messagesContainer" class="messages-container"></div>
+
+                    <!-- Loading Indicator -->
+                    <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+                        <div class="loading-bubble">
+                            <div class="loading-content">
+                                <div class="loading-dots">
+                                    <div class="dot"></div>
+                                    <div class="dot"></div>
+                                    <div class="dot"></div>
+                                </div>
+                                <span class="loading-text">AI is thinking...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Messages End -->
+                    <div id="messagesEnd"></div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <div class="input-content">
+                    <form id="chatForm" class="chat-form">
+                        <!-- Model Selection -->
+                        <div class="model-section">
+                            <span class="model-label">Model:</span>
+                            <div class="select-wrapper">
+                                <select id="modelSelect" class="model-select">
+                                    <option value="llama">Llama</option>
+                                    <option value="granite">Granite</option>
+                                    <option value="mistral">Mistral</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Message Input -->
+                        <div class="input-section">
+                            <div class="textarea-container">
+                                <textarea
+                                    id="messageInput"
+                                    class="message-textarea"
+                                    placeholder="Type your message... (Enter to send, Shift+Enter for new line)"
+                                    rows="1"
+                                ></textarea>
+                            </div>
+
+                            <button type="submit" id="sendButton" class="send-button">
+                                <svg id="sendIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                                </svg>
+                                <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+                                    <div class="spinner"></div>
+                                </div>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
+```
+
+Simple HTML providing a form that calls the `/generate` endpoint, passing a message and model selection.
+
+### Step 3: Adding CSS and JavaScript
+
+Flask serves static assets (CSS, JS) from a dedicated `static/` folder. The lab hosts the frontend's CSS and JavaScript as GitHub Gists rather than inline in the reading:
+
+```bash
+mkdir static
+wget -O static/script.js "https://gist.githubusercontent.com/tenzinmigmar/0168709391266a8d8da7936f1a866c71/raw/95f4f4e1a1966b3f5183dd2f822cfcfd08d2238a/script.js"
+wget -O static/styles.css "https://gist.githubusercontent.com/tenzinmigmar/278575598f79a4940993a1fc8640a60a/raw/24eda98885e854b01b4a46d1756112e91d3acc10/styles.css"
+```
+
+### Step 4: Testing the AI-Enabled Application
+
+```bash
+python app.py
+```
+
+This starts the Flask development server on port 5000. In IBM's Cloud IDE, a "Test your application" button opens the running app; running locally, that's simply `http://127.0.0.1:5000`.
+
+Try different messages and models to see how the responses vary — congratulations, a fully LLM-enabled Flask application.
+
 ## Local Ollama Version
 
-The rest of this lab (the full Flask app's `/generate` route, wired end-to-end with the JSON-structured chain above) continues with IBM watsonx.ai models, which need a paid IBM Cloud API key to run outside Skills Network's Cloud IDE. A working local version of this same project — same file structure, same LangChain patterns, rewired to local Ollama models, including the Pydantic/`JsonOutputParser` structured-output step and the exercise's extended schema — lives in [`local_ollama_app/`](<./local_ollama_app/>).
+This lab's full stack — the `/generate` route wired to the JSON-structured chain, the `index.html` chat UI, and the `static/script.js` + `static/styles.css` assets — needs an IBM Cloud API key to run against watsonx.ai outside Skills Network's Cloud IDE. A working local version of this same project — same file structure, same LangChain patterns and UI, rewired to local Ollama models — lives in [`local_ollama_app/`](<./local_ollama_app/>).
