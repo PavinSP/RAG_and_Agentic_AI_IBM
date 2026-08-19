@@ -732,6 +732,34 @@ This starts the Flask development server on port 5000. In IBM's Cloud IDE, a "Te
 
 Try different messages and models to see how the responses vary — congratulations, a fully LLM-enabled Flask application.
 
+## Conclusion and Next Steps
+
+### Key Takeaways
+
+- Set up a Flask application with AI capabilities.
+- Integrated and compared multiple language models (Llama, Granite, Mistral).
+- Implemented LangChain's `JsonOutputParser` for structured AI outputs.
+- Gained insights into prompt engineering and model performance analysis.
+- Created a modular and maintainable codebase for AI integration.
+
+### Next Steps
+
+To further enhance this application:
+
+- **Implement caching** — improve performance for repeated queries.
+- **Explore advanced LangChain features** — e.g. memory for maintaining conversation context.
+- **Add more models** — try integrating other models available through watsonx.ai.
+- **Implement A/B testing** — compare responses from different models for the same query.
+- **Enhance error handling** — more robust error handling and logging.
+- **Explore IBM Cloud services** — expand the application's capabilities with other IBM Cloud integrations.
+
+### Further Learning
+
+- IBM's hands-on learning path on agentic AI, with more guided projects like this one.
+- The IBM watsonx.ai documentation, for more advanced features.
+- LangChain, for more sophisticated AI application architectures.
+- Prompt engineering techniques, to improve AI model outputs.
+
 ## Local Ollama Version
 
 This lab's full stack — the `/generate` route wired to the JSON-structured chain, the `index.html` chat UI, and the `static/script.js` + `static/styles.css` assets — needs an IBM Cloud API key to run against watsonx.ai outside Skills Network's Cloud IDE. A working local version of this same project — same file structure, same LangChain patterns and UI, rewired to local Ollama models — lives in [`local_ollama_app/`](<./local_ollama_app/>).
