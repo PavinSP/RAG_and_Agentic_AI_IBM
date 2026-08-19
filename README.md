@@ -77,6 +77,6 @@ Study notes for IBM's **RAG and Agentic AI Professional Certificate** (10 course
   - [03_Introduction to Flask.md](<01 - Develop Generative AI Applications - Get Started/Module 3 - Build a Generative AI Application with LangChain/01_Application Development Workflow with Generative AI/03_Introduction to Flask.md>)
   - [04_Flask: A Gateway to Web Development in Python.md](<01 - Develop Generative AI Applications - Get Started/Module 3 - Build a Generative AI Application with LangChain/01_Application Development Workflow with Generative AI/04_Flask: A Gateway to Web Development in Python.md>)
   - [05_Python with Flask for Large Scale Projects.md](<01 - Develop Generative AI Applications - Get Started/Module 3 - Build a Generative AI Application with LangChain/01_Application Development Workflow with Generative AI/05_Python with Flask for Large Scale Projects.md>)
-  - [06_Web Development using Flask.md](<01 - Develop Generative AI Applications - Get Started/Module 3 - Build a Generative AI Application with LangChain/01_Application Development Workflow with Generative AI/06_Web Development using Flask.md>) — cheat sheet: Flask basics, routing, status codes, error handling
+  - [06_Cheat Sheet: Web Development using Flask.md](<01 - Develop Generative AI Applications - Get Started/Module 3 - Build a Generative AI Application with LangChain/01_Application Development Workflow with Generative AI/06_Cheat Sheet: Web Development using Flask.md>) — cheat sheet: Flask basics, routing, status codes, error handling
 
 _(Index updated as notes are added.)_

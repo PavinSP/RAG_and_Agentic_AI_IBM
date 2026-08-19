@@ -27,7 +27,7 @@ See [Cheat Sheet: Introduction to LangChain in GenAI Applications](<01 - Develop
 
 ### Module 3: Build a Generative AI Application with LangChain
 
-See [Cheat Sheet: Web Development using Flask](<01 - Develop Generative AI Applications - Get Started/Module 3 - Build a Generative AI Application with LangChain/01_Application Development Workflow with Generative AI/06_Web Development using Flask.md>) for the module's own cheat sheet, covering:
+See [Cheat Sheet: Web Development using Flask](<01 - Develop Generative AI Applications - Get Started/Module 3 - Build a Generative AI Application with LangChain/01_Application Development Workflow with Generative AI/06_Cheat Sheet: Web Development using Flask.md>) for the module's own cheat sheet, covering:
 
 - Flask app instantiation (`Flask(__name__)`)
 - Routing (`@app.route` decorator)
