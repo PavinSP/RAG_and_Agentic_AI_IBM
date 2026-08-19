@@ -6,7 +6,6 @@
 .DS_Store
 ._*
 Context.md
-**/Audio Notes/*.mp3
 .venv/
 **/.venv/
 __pycache__/
