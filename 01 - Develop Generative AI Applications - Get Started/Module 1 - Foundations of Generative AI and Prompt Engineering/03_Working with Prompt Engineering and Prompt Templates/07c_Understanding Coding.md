@@ -8,14 +8,13 @@ Read this top to bottom in the order the notebook itself runs — each section b
 
 1. Python syntax you'll see everywhere in this notebook
 2. What is an LLM call, really?
-3. The `OllamaLLM` class — how we talk to the local model
-4. The `llm_model()` helper function
-5. Prompt engineering techniques, one at a time
-6. LangChain's `PromptTemplate` — templating prompts properly
-7. The pipe operator and LCEL — building "chains"
-8. `RunnableLambda` and `StrOutputParser` — the glue pieces
-9. Putting it all together: the applications section
-10. Why This Matters
+3. The `llm_model()` helper function
+4. Prompt engineering techniques, one at a time
+5. LangChain's `PromptTemplate` — templating prompts properly
+6. The pipe operator and LCEL — building "chains"
+7. `RunnableLambda` and `StrOutputParser` — the glue pieces
+8. Putting it all together: the applications section
+9. Why This Matters
 
 ---
 
@@ -63,36 +62,6 @@ def format_prompt(variables):
 
 The `**` in front of a dictionary "unpacks" it — it takes every key-value pair in the dictionary and passes each one as a separate named argument. So if `variables = {"adjective": "funny", "content": "chickens"}`, then `prompt.format(**variables)` is exactly the same as writing `prompt.format(adjective="funny", content="chickens")`. This matters here because the number of variables in a prompt template changes from one exercise to the next (sometimes two, sometimes just one), so the code needs a way to pass "however many keyword arguments this dictionary happens to contain" without hardcoding their names.
 
-### Classes and `class OllamaLLM(LLM):`
-
-```python
-class OllamaLLM(LLM):
-    model: str = "qwen2.5:7b"
-    temperature: float = 0.5
-    max_tokens: int = 256
-
-    @property
-    def _llm_type(self) -> str:
-        return "ollama"
-
-    def _call(self, prompt: str, stop: Optional[List[str]] = None, **kwargs) -> str:
-        ...
-```
-
-`class OllamaLLM(LLM):` defines a new class named `OllamaLLM` that **inherits** from LangChain's own `LLM` base class. Inheriting means `OllamaLLM` automatically gets all the behavior of `LLM` (like the standard `.invoke()` method used throughout the notebook), and only needs to fill in the parts that are specific to *this* model — namely, how to actually send a prompt to Ollama and get text back.
-
-- The lines `model: str = "qwen2.5:7b"` etc. are **type-annotated fields with defaults** — Pydantic (the library LangChain's base classes are built on) uses this style to declare "this object has a `model` field, it should be a string, and if nobody says otherwise it defaults to `qwen2.5:7b`."
-- `@property` above `_llm_type` marks that method so it can be accessed like an attribute (`self._llm_type`) instead of being called like a function (`self._llm_type()`). LangChain requires every LLM subclass to expose a `_llm_type` so it can identify what kind of model it's wrapping internally.
-- `_call` is the one method LangChain actually requires you to implement yourself — it's the function that gets invoked, under the hood, whenever someone calls `.invoke(prompt)` on your object. Everything else (`.invoke()`, chaining with `|`, etc.) is inherited for free from `LLM`.
-
-### Type hints (`Optional[List[str]]`, `-> str`)
-
-```python
-def _call(self, prompt: str, stop: Optional[List[str]] = None, **kwargs) -> str:
-```
-
-`prompt: str` means "this argument is expected to be a string." `-> str` after the parenthesis means "this function returns a string." `Optional[List[str]] = None` means "this argument is either a list of strings, or `None`, and if you don't pass it, it defaults to `None`." Python doesn't actually enforce these at runtime (unlike, say, Java or C#) — they're purely documentation/tooling hints for humans and editors, but LangChain's internals do rely on them being accurate to work correctly.
-
 ---
 
 ## 2. What is an LLM call, really?
@@ -109,37 +78,7 @@ what actually happens underneath is a POST request to `http://localhost:11434/ap
 
 ---
 
-## 3. The `OllamaLLM` class — how we talk to the local model
-
-This class only exists in the *local Ollama variant* of this notebook (it replaces IBM's `WatsonxLLM`, which needs cloud credentials this variant doesn't use). Walking through `_call` line by line:
-
-```python
-def _call(self, prompt: str, stop: Optional[List[str]] = None, **kwargs) -> str:
-    resp = requests.post(
-        "http://localhost:11434/api/generate",
-        json={
-            "model": self.model,
-            "prompt": prompt,
-            "stream": False,
-            "options": {"temperature": self.temperature, "num_predict": self.max_tokens},
-        },
-        timeout=120,
-    )
-    resp.raise_for_status()
-    return resp.json()["response"]
-```
-
-- `requests.post(url, json={...})` — the `requests` library is Python's standard tool for making HTTP requests. `json={...}` tells it "serialize this dictionary as a JSON request body, and set the right `Content-Type` header automatically."
-- `"model": self.model` — tells Ollama which locally-installed model to use (`qwen2.5:7b` by default here). `self.model` refers back to the class field defined earlier.
-- `"stream": False` — Ollama can either stream the response back token-by-token (useful for a live-typing UI effect) or wait and send the whole response at once. We use `False` because we just want the complete text in one go.
-- `"options": {"temperature": ..., "num_predict": ...}` — Ollama's equivalent of the generation parameters (`temperature` controls randomness, `num_predict` caps how many tokens/words the response can contain — comparable to `max_new_tokens` you'll see elsewhere).
-- `timeout=120` — if Ollama doesn't respond within 120 seconds, raise an error instead of hanging forever. Larger/slower prompts (like the 512-token chain-of-thought ones) can genuinely take a while on a laptop CPU.
-- `resp.raise_for_status()` — if the HTTP response indicates an error (like a 404 or 500), this line raises an exception immediately rather than silently continuing with a broken response.
-- `resp.json()["response"]` — Ollama's JSON response body has several fields; `"response"` is the one containing the actual generated text. `.json()` parses the raw JSON text into a Python dictionary, and `["response"]` looks up that one key.
-
----
-
-## 4. The `llm_model()` helper function
+## 3. The `llm_model()` helper function
 
 ```python
 def llm_model(prompt_txt, params=None):
@@ -153,26 +92,20 @@ def llm_model(prompt_txt, params=None):
     if params:
         default_params.update(params)
 
-    ollama_llm = OllamaLLM(
-        model="qwen2.5:7b",
-        temperature=default_params["temperature"],
-        max_tokens=default_params["max_new_tokens"],
-    )
-
-    response = ollama_llm.invoke(prompt_txt)
+    response = ...  # sends prompt_txt to the local model with the merged settings
     return response
 ```
 
-This function exists purely for convenience throughout the earlier part of the notebook (before `PromptTemplate`/chains are introduced) — it's a shortcut so you can write `llm_model(prompt, params)` in one line instead of constructing an `OllamaLLM` object every single time.
+This function exists purely for convenience throughout the earlier part of the notebook (before `PromptTemplate`/chains are introduced) — it's a shortcut so you can write `llm_model(prompt, params)` in one line instead of setting up the model connection every single time.
 
 - `params=None` — a default argument. If you call `llm_model(prompt)` without a second argument, `params` is `None`.
 - `default_params = {...}` — a baseline set of generation settings.
 - `if params: default_params.update(params)` — `.update()` merges another dictionary into this one, overwriting any keys that exist in both. So if you call `llm_model(prompt, {"max_new_tokens": 10})`, only `max_new_tokens` changes to 10; everything else in `default_params` stays at its original value. This pattern ("defaults + selective overrides") is extremely common in configuration-heavy code.
-- `ollama_llm = OllamaLLM(...)` then `.invoke(prompt_txt)` — creates a fresh model wrapper with the merged settings, and calls it. `.invoke()` is the standard method every LangChain "runnable" object exposes (you'll see this exact method name reused later on `PromptTemplate`, on chains, on everything) — it means "run this thing with this input, and give me back the result."
+- The function then sends `prompt_txt` to the local model using the merged settings and returns the generated text. `.invoke(...)` is the standard method LangChain "runnable" objects expose (you'll see this exact method name reused later on `PromptTemplate`, on chains, on everything) — it means "run this thing with this input, and give me back the result."
 
 ---
 
-## 5. Prompt engineering techniques, one at a time
+## 4. Prompt engineering techniques, one at a time
 
 Remember from Section 2: none of these are special "modes." Each one is just a different *pattern for writing the prompt text*, exploiting how the model naturally continues text.
 
@@ -253,7 +186,7 @@ This asks the model to solve the *same problem multiple times, independently*, a
 
 ---
 
-## 6. LangChain's `PromptTemplate` — templating prompts properly
+## 5. LangChain's `PromptTemplate` — templating prompts properly
 
 Every prompt above was a plain Python string, hand-written for that one specific example. That doesn't scale — what if you want the *same* prompt structure applied to many different inputs? That's what `PromptTemplate` solves.
 
@@ -275,7 +208,7 @@ prompt.format(adjective='funny', content='chickens')
 
 ---
 
-## 7. The pipe operator and LCEL — building "chains"
+## 6. The pipe operator and LCEL — building "chains"
 
 LCEL stands for **LangChain Expression Language** — it's the modern way LangChain recommends connecting pieces together, using Python's `|` (pipe) operator.
 
@@ -289,7 +222,7 @@ joke_chain = (
 
 Think of `|` here the same way you might in a Unix shell pipeline (`cat file | grep pattern | sort`) — it means "take the output of the thing on the left, and feed it as the input to the thing on the right." So this chain reads as: *take my input → format it into a prompt (`RunnableLambda(format_prompt)`) → send that prompt to the model (`llm`) → clean up the model's raw output into a plain string (`StrOutputParser()`)*.
 
-Importantly, `|` is **not** a Python built-in behavior for arbitrary objects — LangChain's base classes (the same `LLM` class `OllamaLLm` inherits from, plus `RunnableLambda`, `StrOutputParser`, etc.) all implement Python's special `__or__` method, which is what lets `a | b` do something custom instead of throwing an error. This is the same mechanism that lets you write `3 | 5` in Python and get a bitwise-OR result for integers — LangChain repurposes that same operator for "connect these two processing steps."
+Importantly, `|` is **not** a Python built-in behavior for arbitrary objects — LangChain's base classes (the model wrapper, plus `RunnableLambda`, `StrOutputParser`, etc.) all implement Python's special `__or__` method, which is what lets `a | b` do something custom instead of throwing an error. This is the same mechanism that lets you write `3 | 5` in Python and get a bitwise-OR result for integers — LangChain repurposes that same operator for "connect these two processing steps."
 
 Once a chain is built, you run the whole thing with `.invoke(...)`:
 
@@ -301,7 +234,7 @@ The dictionary `{"adjective": "happy", "content": "indians"}` is the *starting* 
 
 ---
 
-## 8. `RunnableLambda` and `StrOutputParser` — the glue pieces
+## 7. `RunnableLambda` and `StrOutputParser` — the glue pieces
 
 ```python
 def format_prompt(variables):
@@ -311,13 +244,13 @@ def format_prompt(variables):
 RunnableLambda(format_prompt)
 ```
 
-`format_prompt` is just an ordinary Python function — nothing LangChain-specific about it. The problem is that a plain function can't be connected with `|` on its own, because `|` only works between objects that implement that special chaining behavior (Section 7). `RunnableLambda(...)` is a thin wrapper that takes any ordinary Python function and makes it chainable — "wrap this regular function so it behaves like a proper link in the chain."
+`format_prompt` is just an ordinary Python function — nothing LangChain-specific about it. The problem is that a plain function can't be connected with `|` on its own, because `|` only works between objects that implement that special chaining behavior (Section 6). `RunnableLambda(...)` is a thin wrapper that takes any ordinary Python function and makes it chainable — "wrap this regular function so it behaves like a proper link in the chain."
 
 `StrOutputParser()` solves a different, smaller problem: depending on the model/LangChain version, an LLM's raw output object can carry extra metadata (token counts, stop reasons, etc.) alongside the actual text. `StrOutputParser()` simply extracts the plain string content and discards the rest, so whatever code runs after it (a `print(...)`, or another step in a chain) gets clean text instead of having to know how to unwrap a model-specific response object.
 
 ---
 
-## 9. Putting it all together: the applications section
+## 8. Putting it all together: the applications section
 
 Every "application" cell later in the notebook (text summarization, Q&A, text classification, SQL generation, role playing, and the Exercise 5 product-review analyzer) follows the **exact same five-step recipe**:
 
