@@ -33,3 +33,11 @@ See [Cheat Sheet: Web Development using Flask](<01 - Develop Generative AI Appli
 - Routing (`@app.route` decorator)
 - Response status codes (200 OK, 4xx client errors, 500 server error)
 - Error handling (`@app.errorhandler`)
+
+See [Cheat Sheet: Build GenAI Application with LangChain](<01 - Develop Generative AI Applications - Get Started/Module 3 - Build a Generative AI Application with LangChain/02_Summary and Evaluation/02_Cheat Sheet.md>) for the module's end-of-module cheat sheet, covering:
+
+- Project setup (`venv`, `pip install ibm-watsonx-ai`, `Credentials`, `GenTextParamsMetaNames`, `ModelInference`)
+- LangChain prompt templates with model-specific special tokens (Llama 3's `<|begin_of_text|>`/`<|start_header_id|>`/`<|eot_id|>`)
+- LangChain chaining with the `|` pipe operator
+- Structured JSON outputs (`JsonOutputParser`, Pydantic `BaseModel`/`Field`)
+- Flask API integration (`/generate` route, error handling)
