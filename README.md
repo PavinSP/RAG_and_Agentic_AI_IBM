@@ -2,6 +2,14 @@
 
 Study notes for IBM's **RAG and Agentic AI Professional Certificate** (10 courses).
 
+## Two kinds of notes
+
+- **Course-text notes** — inside each numbered lesson folder, based on Coursera's own lesson text, readings, quizzes, and labs.
+- **Video Notes** — one file per lecture video, in each module's `Video Notes/` folder. Audio is extracted with `ffmpeg`, transcribed locally with `mlx-whisper` (`whisper-large-v3-turbo`), then written up in depth. The source `.mp4` files and their `.txt` transcripts live in each module's `Videos/` folder but are gitignored.
+- **Audio Notes** — one narrated MP3 per lesson, in each module's `Audio Notes/` folder, synthesized from that lesson's markdown notes with Kokoro-82M (`af_heart` voice). Gitignored.
+
+> Reproducing the pipelines: `mlx-whisper` and `kokoro` need **separate virtualenvs** — mlx-whisper requires numpy ≥ 2 while this repo's `langchain 0.2.x` stack requires numpy < 2, so installing them together breaks the labs. Kokoro also ships a broken bundled `espeak-ng` (its dylib has a hardcoded CI build path); fix it by copying `/opt/homebrew/lib/libespeak-ng.1.dylib` and `/opt/homebrew/Cellar/espeak-ng/*/share/espeak-ng-data` over the files in `espeakng_loader/`.
+
 ## Courses
 
 1. **[Develop Generative AI Applications: Get Started](01%20-%20Develop%20Generative%20AI%20Applications%20-%20Get%20Started/)**
@@ -47,10 +55,16 @@ Study notes for IBM's **RAG and Agentic AI Professional Certificate** (10 course
   - [02_Cheat Sheet: Foundations of Generative AI and LangChain.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/04_Module Summary and Evaluation/02_Cheat Sheet: Foundations of Generative AI and LangChain.md>)
   - [03_Practice Quiz.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/04_Module Summary and Evaluation/03_Practice Quiz.md>)
   - [04_Graded Quiz.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/04_Module Summary and Evaluation/04_Graded Quiz.md>)
-- **Video Notes**
+- **Video Notes** — one note per lecture video, written up from local Whisper transcripts
   - [01_Course Introduction.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/Video Notes/01_Course Introduction.md>)
   - [02_RAG and Agentic AI Professional Certificate Overview.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/Video Notes/02_RAG and Agentic AI Professional Certificate Overview.md>)
   - [03_Introduction to Generative AI.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/Video Notes/03_Introduction to Generative AI.md>)
+  - [04_What are Generative AI Models.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/Video Notes/04_What are Generative AI Models.md>)
+  - [05_What is NLP.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/Video Notes/05_What is NLP.md>)
+  - [06_Introduction to In-Context Learning.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/Video Notes/06_Introduction to In-Context Learning.md>)
+  - [07_Introduction to LangChain.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/Video Notes/07_Introduction to LangChain.md>)
+  - [08_Advanced Methods of Prompt Engineering.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/Video Notes/08_Advanced Methods of Prompt Engineering.md>)
+  - [09_LangChain LCEL Chaining Method.md](<01 - Develop Generative AI Applications - Get Started/Module 1 - Foundations of Generative AI and Prompt Engineering/Video Notes/09_LangChain LCEL Chaining Method.md>)
 
 ### Module 2 - Introduction to LangChain in GenAI Applications
 
@@ -68,6 +82,10 @@ Study notes for IBM's **RAG and Agentic AI Professional Certificate** (10 course
   - [01_Summary and Highlights.md](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/02_Module Summary and Evaluation/01_Summary and Highlights.md>)
   - [02_Cheat Sheet.md](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/02_Module Summary and Evaluation/02_Cheat Sheet.md>)
   - [03_Graded Quiz.md](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/02_Module Summary and Evaluation/03_Graded Quiz.md>)
+- **Video Notes**
+  - [01_LangChain Core Concepts.md](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/Video Notes/01_LangChain Core Concepts.md>)
+  - [02_LangChain Chains and Agents for Building Applications.md](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/Video Notes/02_LangChain Chains and Agents for Building Applications.md>)
+  - [03_LangChain LCEL Chaining Method.md](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/Video Notes/03_LangChain LCEL Chaining Method.md>) — same video as Module 1's; points to that note
 
 ### Module 3 - Build a Generative AI Application with LangChain
 
@@ -90,6 +108,10 @@ Study notes for IBM's **RAG and Agentic AI Professional Certificate** (10 course
   - [01_Course Wrap Up.md](<01 - Develop Generative AI Applications - Get Started/Module 3 - Build a Generative AI Application with LangChain/03_Course Wrap Up/01_Course Wrap Up.md>)
   - [02_Congratulations and Next Step.md](<01 - Develop Generative AI Applications - Get Started/Module 3 - Build a Generative AI Application with LangChain/03_Course Wrap Up/02_Congratulations and Next Step.md>)
   - [03_Team and Acknowledgement.md](<01 - Develop Generative AI Applications - Get Started/Module 3 - Build a Generative AI Application with LangChain/03_Course Wrap Up/03_Team and Acknowledgement.md>)
+- **Video Notes**
+  - [01_Choose the Right AI Model for Your Use Case.md](<01 - Develop Generative AI Applications - Get Started/Module 3 - Build a Generative AI Application with LangChain/Video Notes/01_Choose the Right AI Model for Your Use Case.md>)
+  - [02_From Idea to AI - Building Applications with Generative AI.md](<01 - Develop Generative AI Applications - Get Started/Module 3 - Build a Generative AI Application with LangChain/Video Notes/02_From Idea to AI - Building Applications with Generative AI.md>)
+  - [03_Introduction to Flask.md](<01 - Develop Generative AI Applications - Get Started/Module 3 - Build a Generative AI Application with LangChain/Video Notes/03_Introduction to Flask.md>)
 
 **Course 1 complete.** ✅
 
