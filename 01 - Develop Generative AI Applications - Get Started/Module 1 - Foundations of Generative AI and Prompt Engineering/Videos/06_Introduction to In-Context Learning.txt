@@ -1,0 +1,79 @@
+Welcome to Introduction to In-Context Learning.
+After watching this video, you'll be able to describe In-Context Learning.
+You will also be able to explain the fundamentals of prompt engineering.
+In-Context Learning is a specific method of prompt engineering where demonstrations of the task are provided to the model as a part of the prompt in natural language.
+
+However, In-Context Learning doesn't require additional training.
+A new task is learned from a small set of examples presented within the context or prompt at inference time.
+Let's understand some advantages and disadvantages of In-Context Learning.
+In-Context Learning doesn't require the model to be fine-tuned on specific datasets.
+
+This can drastically reduce the resources and time needed to adapt LLMs for specific tasks while improving their performance.
+While In-Context Learning is efficient, it's constrained by what can realistically be provided in a context.
+Complex tasks could require gradient steps or more traditional machine learning training approaches, which involve adjusting the model's weights based on error gradients.
+Next, let's learn about prompt engineering.
+
+Let's begin by understanding what prompts are and their role in interacting with AI systems.
+Essentially, prompts are instructions or inputs given to an LLM, designed to guide it toward performing a specific task or generating a desired output.
+There are two main components to a prompt.
+Instructions are clear, direct commands that tell the AI what to do.
+
+They need to be specific to ensure the LLM understands the task.
+Context includes the necessary information or background that helps the LLM make sense of the instruction.
+It can be data, parameters, or any relevant details that shape the AI's response.
+By combining these elements effectively, you can tailor LLMs, like those developed by IBM, OpenAI, Google, or Meta, to perform tasks ranging from answering queries and analyzing data to generating content.
+
+Prompt engineering is a specialized process where you design and refine the questions, commands, or statements you use to interact with the AI systems, particularly LLMs.
+The goal is not just about asking a question.
+It's about how to ask it in its best way possible.
+This involves carefully crafting clear, contextually rich prompts tailored to get the most relevant and accurate responses from the AI.
+
+This process is fundamental in fields ranging from customer service automation to advanced research and computational linguistics.
+Now that you're familiar with prompt engineering, let's delve into why it's crucial for enhancing AI capabilities.
+Prompt engineering boosts effectiveness and accuracy by directly influencing how effectively and accurately LLMs function.
+It ensures relevance by enabling LLMs to generate precise and perfectly suited responses to the context.
+
+It facilitates meeting user expectations through clearer prompts and reduced misunderstandings.
+It eliminates the need for continual fine-tuning, allowing the model to adapt and learn within its context.
+Here is an example of a prompt given to GPT 3.5.
+The wind is.
+
+This simple prompt leads to a poetic response.
+Blowing gently through the trees, whispering secrets and stories to anyone who cares to listen.
+You can see how an open-ended prompt can guide the LLM to create imaginative and detailed responses, highlighting its ability to generate creative and engaging content.
+Let's break down the components that make up a well-structured prompt.
+
+Instructions tell the LLM what needs to be done.
+For example, classify the following customer review into neutral, negative or positive sentiment.
+This is straightforward and directs the LLMs action.
+Context helps the LLM understand the scenario or the background in which it operates.
+
+Here, it's indicated that this review is part of feedback for a recently launched product.
+This can help the LLM weigh the sentiment analysis in light of the product's novelty.
+Input data is the actual data the LLM will process.
+In the prompt, it's the customer review.
+
+The product arrived late, but the quality exceeded my expectations.
+The LLM uses this data to perform the task specified by the instructions.
+The output indicator is the part of the prompt where the LLM's response is expected.
+It's a clear marker that tells the AI where to deliver its analysis.
+
+In this example, sentiment indicates waiting for the LLM to append its classification.
+Let's recap.
+In this video, you learned that.
+In-context learning is a method of prompt engineering where task demonstrations are provided to the model as a part of the prompt.
+
+Prompts are inputs given to an LLM to guide it towards performing a specific task.
+They consist of instructions and context.
+Prompt engineering is a process where you design and refine the prompts to get relevant and accurate responses from AI.
+Prompt engineering has several advantages.
+
+It boosts the effectiveness and accuracy of LLMs.
+It ensures relevant responses.
+It facilitates meeting user expectations.
+It eliminates the need for continual fine-tuning.
+
+A prompt consists of four key elements.
+Instructions, context, input data, and output indicator.
+
+[Trailing Whisper transcription artifacts on silence removed.]

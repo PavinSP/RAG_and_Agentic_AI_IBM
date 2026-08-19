@@ -1,0 +1,92 @@
+Welcome to LangChain Chains and Agents for Building Applications.
+After watching this video, you'll be able to describe chains in LangChain for generating responses and how LangChain stores memory.
+You'll also be able to define agents used in LangChain.
+LangChain is a platform embedded with APIs to develop applications, empowering them to infuse language processing capabilities.
+
+Therefore, developers find LangChain suitable for building applications.
+LangChain uses certain tools, including documents, chains, and agents for building applications.
+Let's explore Chains for Building Applications.
+In LangChain, chains are a sequence of calls.
+
+A sequential chain consists of basic steps where each step takes one input to generate one output to create one seamless flow of information.
+The output from step one becomes the input for step two.
+Let's look at the creation of a sequential chain of three individual chains.
+The aim of this chain is to identify the recipe and the estimated cooking time for the famous dish available in the inserted location.
+
+The users leverage chain one for selecting the geographic region to get the famous dish in that location, chain two for providing the recipe, and chain three for estimating the cooking time.
+Chain one in this sequence uses a user's prompt as input for a specific dish based on the user's specified location.
+For example, China.
+Therefore, the output for chain one should be a famous dish in China, Peking duck.
+
+Let's see how to use the code to create this chain.
+First, define a template string for the prompt.
+Ask for a specific dish from a specified location.
+Create a prompt template object using the defined template specifying the input variable as location.
+
+Then, create an LLM chain object named location chain using LLM-based language model, such as Mixtrel LLM.
+It means that before running this code, assume the chat model object is available.
+Therefore, the output will be stored under the key meal.
+Let's look at chain two.
+
+In the second chain of our sequential setup, use the output from the first chain, that is, the name of the dish as the input.
+The output from this chain will be the recipe itself.
+Let's look at the code.
+First, define the template before asking for a simple recipe for a given meal.
+
+Next, create a prompt template with meal as the input variable.
+Finally, create an LLM chain named Dish chain using Mixtrel LLM and prompt template with the output key recipe.
+Next is chain three.
+Take the recipe obtained from the second chain as the input.
+
+This chain is designed to estimate the cooking time for the meal based on the recipe.
+Like chain two, define a template to estimate the cooking time for a given recipe.
+Next, create a prompt template with recipe as the input variable.
+Lastly, create an LLM chain named recipe chain using Mixtrel LLM and prompt template with the output key time.
+
+Now using three chains, the overall setup is a sequential chain that wraps all the individual chains together, creating a unified process.
+By invoking the query through this combined chain, you can trace the flow of information from start to end.
+You can set the verbose option to true to view the overall output.
+This provides a clear and detailed view of how each input is transformed through the chain into the final output.
+
+Here is an example of the output.
+Do you know how memory is stored in the LLM applications?
+In LLM chain, memory storage is important for reading and writing historical data.
+Each chain relies on specific inputs such as user and memory.
+
+Chain reads from memory to enhance user inputs before executing its core logic and writes the current runs inputs and outputs back to the memory after execution.
+This ensures continuity and context preservation across interactions.
+The Chat Message History class in LLM chain is designed to manage and store conversation histories effectively, including human messages and AI messages.
+This allows adding messages from the AI and users to the history.
+
+In this example, call a Chat Message History class and add AI message high into the memory.
+The memory will append this AI message as input.
+Now add the user's message, what is the capital of France, and the memory will append this as human message input.
+You would receive responses based on the stored memory.
+
+Now let's understand agents in LLM chain.
+Agents in LLM chain are dynamic systems where a language model determines and sequences actions such as predefined chains.
+The model generates text outputs to guide actions but does not execute them directly.
+However, agents integrate with tools such as search engines, databases, and websites to fulfill user requests.
+
+For example, if a user asks for the population of Italy, the agent uses the language model to find options, query a database for details, and return a curated list.
+This shows the agent's ability to autonomously leverage LLM reasoning with external tools.
+In this example, let's create a Pandas DataFrame agent using LLM chain.
+This agent allows users to query and visualize data with natural language.
+
+To set it up, instantiate the CreatePanda's DataFrame agent class.
+In this class, pass the LLM chat model in the DataFrame.
+Next, set the verbose to true to see how the LLM thinks.
+Finally, use the invoke code to execute the query how many rows in the DataFrame.
+
+The LLM transforms queries into Python code, executed in the background, enabling precise answers to the number of rows of the DataFrame.
+For example, the response shows there are 139 rows in the DataFrame.
+Let's recap.
+In this video, you learned that LLM chain is a platform that embeds APIs for developing applications.
+
+Chains is the sequence of calls.
+In Chains, the output from one step becomes the input for the next step.
+In LangChain, Chains first define the template string for the prompt, then creates a prompt template using the defined template, and creates an LLM chain object name.
+In LangChain, memory storage is important for reading and writing historical data.
+
+Agents in LangChain are dynamic systems where a language model determines and sequences actions, such as predefined chains.
+Agents integrate with tools such as search engines, databases, and websites to fulfill user requests.

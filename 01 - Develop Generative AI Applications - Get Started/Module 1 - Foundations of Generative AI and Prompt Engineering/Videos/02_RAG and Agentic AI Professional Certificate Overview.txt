@@ -1,0 +1,57 @@
+Welcome to this overview of the Professional Certificate in RAG and Agentic AI.
+AI is evolving beyond traditional models, enabling smarter applications.
+Retrieval Augmented Generation, or RAG, enhances AI's ability to provide accurate, context-aware responses by integrating real-time information retrieval.
+Multimodal AI is another advancement that allows systems to process and integrate various types of data – text, images, audio, and video – enabling more dynamic and interactive user experiences.
+
+Agentic AI represents a further shift, equipping systems with the ability to reason, plan, and autonomously execute tasks.
+While each of these approaches can work independently, they can also be combined to create more powerful and adaptable AI systems.
+Through this program, you'll gain the expertise to build and implement AI applications that combine these powerful techniques, preparing you for the next wave of AI-driven innovation.
+Whether you're looking to advance in software engineering, machine learning, or data science, mastering RAG, Multimodal, and Agentic AI will give you a competitive edge in the evolving job market.
+
+This RAG and Agentic AI program consists of several short courses that cover Generative AI Applications RAG Applications Vector Databases for RAG Advanced RAG with Vector Databases and Retrievers Multimodal Generative AI Applications AI Agents Agentic AI Fundamentals with Langchain and Langgraph and finally, Agentic AI with Langgraph, Crew AI, AG2, formerly Autogen, and BAI Framework.
+Each topic corresponds to an online course that you can complete independently.
+Each course consists of 2-3 modules.
+Completing courses covering different topics and the required projects will earn you the completion certificate.
+
+Let's look at the contents of each course.
+Your journey in the first course begins with the basics of Generative AI along with an in-depth look at prompt engineering, in-context learning, and prompt templates.
+You'll also be introduced to the Langchain Framework to build Generative AI Applications, which streamlines AI workflows by enabling more structured and efficient prompt chaining.
+In the second course, you'll be introduced to the key components of Retrieval Augmented Generation or RAG.
+
+You'll also learn how to implement RAG using Langchain.
+This course also introduces you to Gradio, helping you set up an interface to interact with AI models.
+Finally, you'll work with Llama Index as an alternative to Langchain, gaining hands-on experience building a bot with Llama Index and IBM's Granite model.
+The third course introduces you to the transformative role of vector databases in modern data management systems.
+
+You will gain insights into ChromaDB's architecture, common coding practices for its operations, and hands-on skills in performing basic vector operations.
+Similarity search is also explained with hands-on labs.
+Finally, you will build a recommendation system using a vector database and an embedding model.
+The next course provides a deep dive into advanced retrievers and retrieval patterns, equipping you with the skills to implement and optimize retrieval strategies within a RAG system.
+
+You will work with FAISS, a powerful vector database used for efficient similarity search.
+You will also build a RAG application using FAISS, Langchain, and Gradio.
+The fifth course begins with an in-depth introduction to Multimodal AI, focusing on how AI systems process and integrate multiple data types.
+You will evaluate speech recognition and text-to-speech technologies, along with computer vision.
+
+You will work with tools such as OpenAI Whisper and Mistral to develop multimodal applications.
+You'll also explore how models like DALI generate images and the fundamentals of image captioning.
+Finally, you will dive into multimodal retrieval and search and multimodal question answering and chatbots, learning how cross-modal retrieval techniques enhance search engines and recommendation systems.
+The sixth course provides a detailed foundation for building AI agents.
+
+It covers function calling, chaining, and tool orchestration to enable AI systems to interact with external tools and execute tasks effectively.
+You'll also learn how to manually handle tool calls by parsing the outputs of language models.
+Finally, you will leverage Langchain's built-in agents, including DataFrame and SQL agents, to analyze structured data, generate visualizations, and perform database queries through natural language.
+The seventh course helps you use Langgraph and Langchain to develop stateful workflows.
+
+You'll explore key architectures such as agents and React agents, applying them to real-world applications.
+Additionally, the course introduces multi-agent system design and agentic RAG architecture, equipping you with skills to build scalable, robust applications.
+The eighth and final course helps you design AI workflows using state-of-the-art design patterns and multi-agent orchestration frameworks.
+You will be introduced to agentic frameworks such as Crew AI and Langgraph.
+
+Finally, you will dive into alternative agentic frameworks, IBM's BAI framework, and AG2 to implement multi-agent collaboration and conversation-driven systems.
+This program presents you with practice and graded quizzes to evaluate your learning.
+The graded quizzes carry a weightage that contributes to the course completion.
+These courses have hands-on labs and projects that contribute to the course and program completion requirements.
+
+Finally, after you have successfully completed all of the courses, you will be awarded the completion certificate for this IBM program, a credential valued by many employers.
+We wish you the very best and hope you enjoy this journey.

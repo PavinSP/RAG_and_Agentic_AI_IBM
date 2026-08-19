@@ -5,7 +5,9 @@ Study notes for IBM's **RAG and Agentic AI Professional Certificate** (10 course
 ## Two kinds of notes
 
 - **Course-text notes** — inside each numbered lesson folder, based on Coursera's own lesson text, readings, quizzes, and labs.
-- **Video Notes** — one file per lecture video, in each module's `Video Notes/` folder. Audio is extracted with `ffmpeg`, transcribed locally with `mlx-whisper` (`whisper-large-v3-turbo`), then written up in depth. The source `.mp4` files and their `.txt` transcripts live in each module's `Videos/` folder but are gitignored.
+- **Video Notes** — one file per lecture video, in each module's `Video Notes/` folder. Audio is extracted with `ffmpeg`, transcribed locally with `mlx-whisper` (`whisper-large-v3-turbo`), then written up in depth. The raw transcripts are tracked alongside them in each module's `Videos/` folder (one sentence per line, for readability); the source `.mp4` files are gitignored.
+
+> Whisper sometimes emits degenerate output over trailing silence — a phrase repeated dozens of times, runs of `.`/`?`, or non-English fragments. Where that happened, the artifacts were trimmed and the transcript ends with a `[Trailing Whisper transcription artifacts on silence removed.]` marker, so the edit is visible rather than silent.
 - **Audio Notes** — one narrated MP3 per lesson, in each module's `Audio Notes/` folder, synthesized from that lesson's markdown notes with Kokoro-82M (`af_heart` voice). Gitignored (local only). Course 1 is fully covered — 9 lessons, ~3 hours of narration. Code-heavy companion files (the "Understanding Coding" walkthroughs) are skipped, since code doesn't narrate usefully.
 
 > Reproducing the pipelines: `mlx-whisper` and `kokoro` need **separate virtualenvs** — mlx-whisper requires numpy ≥ 2 while this repo's `langchain 0.2.x` stack requires numpy < 2, so installing them together breaks the labs. Kokoro also ships a broken bundled `espeak-ng` (its dylib has a hardcoded CI build path); fix it by copying `/opt/homebrew/lib/libespeak-ng.1.dylib` and `/opt/homebrew/Cellar/espeak-ng/*/share/espeak-ng-data` over the files in `espeakng_loader/`.

@@ -1,0 +1,18 @@
+Hello, and welcome to this course on Generative AI Applications.
+The rise of generative AI is transforming industries, creating exciting opportunities for developers who can build intelligent, dynamic applications.
+Skilled generative AI developers are in high demand with companies looking for experts who can design and optimize AI models to enhance user experiences, automate tasks, and drive innovation.
+This growing need for AI-powered applications makes now the perfect time to dive into generative AI application development and explore its vast career potential.
+
+This hands-on course is designed for aspiring AI developers, machine learning engineers, data scientists, AI researchers, or someone in a related role.
+Python programming skills and experience are essential for this course, as it dives straight into coding and application development.
+Fundamental AI and web development knowledge are highly recommended.
+This course begins with an in-depth exploration of generative AI and prompt engineering.
+
+You'll also focus on the LangChain framework, gaining an understanding of its role in designing GenAI applications.
+You'll complete a hands-on lab where you'll build prompt templates using LangChain.
+In the second module, you'll dive deeper into LangChain's core concepts and advanced features.
+You'll also engage in a hands-on lab that demonstrates how LangChain simplifies the complex process of integrating advanced AI capabilities into practical applications.
+
+Finally, the third module will guide you through a series of videos and readings to help you build a GenAI-powered web app using LangChain and Flask.
+You'll also evaluate different language models to determine which best suits your needs.
+To get the most from this course, make sure you Watch the videos Go through each reading Check your understanding with practice quizzes Perform hands-on labs And test your knowledge with the graded assessment Thank you and all the best with this course!

@@ -1,0 +1,52 @@
+Hello and welcome to this video on the LangChain LCEL chaining method.
+After watching this video, you'll be able to Describe how to build flexible, composable chains using LangChain's modern approach to prompt engineering Structure prompts effectively using templates Connect components using the pipe operator to streamline workflows And develop reusable patterns for a variety of AI applications LangChain expression language, or LCEL, is a pattern for building LangChain applications that utilizes the pipe operator to connect components.
+This approach ensures a clean, readable flow of data from input to output.
+LangChain has evolved significantly, and this video will focus on the newer, recommended LCEL pattern rather than the traditional LLM chain approach.
+
+This modern method provides better composability, clearer visualization of data flow, and greater flexibility when constructing complex chains.
+To create a typical LCEL pattern, you need to Define a template with variables and curly braces Create a prompt template instance Build a chain using the pipe operator to connect components Invoke the chain with input values Let's see this in action with a concrete example.
+In LangChain, runnables serve as an interface and building blocks that connect different components like LLMs, retrievers, and tools into a pipeline.
+There are two main runnable composition primitives.
+
+Runnable sequence chains components sequentially, passing the output from one component as input to the next.
+Runnable parallel runs multiple components concurrently while using the same input for each.
+However, LCEL provides elegant syntax shortcuts.
+For example, instead of using runnable sequence, the same sequential chain can be created by simply connecting runnable 1 and runnable 2 with a pipe, making the structure more readable and intuitive.
+
+LCEL also handles type coercion automatically.
+This means it converts regular code into runnable components.
+When you use a dictionary, it becomes a runnable parallel, which runs multiple tasks simultaneously.
+When you use a function, it becomes a runnable lambda, which transforms inputs.
+
+This happens behind the scenes, so you don't have to handle the conversion manually.
+For example, in this code, the pipe operator combines the prompt templates with the LLM.
+The dictionary structure creates a runnable parallel, which processes all three tasks simultaneously.
+Each task receives the same input, text, but processes it differently.
+
+When you run this, it automatically becomes a runnable parallel.
+The result will contain three keys, summary, translation, and sentiment, each with the output from the respective LLM call.
+Let's see LCEL in action by creating a simple chain.
+This code demonstrates how components can be connected using the pipe operator.
+
+The runnable lambda in this chain wraps the format prompt function, transforming it into a runnable component that Langchain can work with.
+When the chain runs, runnable lambda takes the input dictionary, containing adjective and content keys, passes this dictionary to the format prompt function, the function formats the prompt template with these variables.
+The formatted prompt is then passed to the next component, the LLM.
+The pipe operator creates a sequence by connecting runnable components together.
+
+In this joke chain, first, the runnable lambda formats the prompt with variables.
+The pipe operator passes the formatted prompt to the LLM.
+Another pipe passes the LLM's response to the STR output parser.
+We've covered the essentials of LCEL, from its benefits and composition primitives to building practical chains using the pipe operator.
+
+Keep in mind that LCEL is best suited for simpler orchestration tasks.
+For more complex workflows, consider using LangGraph while still leveraging LCEL within individual nodes.
+As you develop your own applications, take advantage of LCEL's strengths, including parallel execution, async support, simplified streaming, and automatic tracing.
+These capabilities enhance both the power and maintainability of your applications.
+
+In this video, you learned that LCEL pattern structures workflows use the pipe operator for clear data flow.
+Prompts are defined using templates with variables and curly braces.
+Components can be linked using runnable sequence for sequential execution.
+Runnable parallel allows multiple components to run concurrently with the same input.
+
+LCEL provides a more concise syntax by replacing runnable sequence with the pipe operator.
+Type coercion in LCEL automatically converts functions and dictionaries into compatible components.
