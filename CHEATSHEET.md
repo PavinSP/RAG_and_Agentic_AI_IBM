@@ -12,3 +12,15 @@ See [Cheat Sheet: Foundations of Generative AI and LangChain](<01 - Develop Gene
 - Prompting techniques (Basic, Zero-shot, One-shot, Few-shot, Chain-of-thought, Self-consistency)
 - LangChain building blocks (`PromptTemplate`, `RunnableLambda`, `StrOutputParser`)
 - LCEL pattern (the `|` pipe operator for chaining)
+
+### Module 2: Introduction to LangChain in GenAI Applications
+
+See [Cheat Sheet: Introduction to LangChain in GenAI Applications](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/02_Module Summary and Evaluation/02_Cheat Sheet.md>) for the module's own cheat sheet, covering:
+
+- Chat models & message types (`WatsonxLLM`, `SystemMessage`/`HumanMessage`/`AIMessage`)
+- Prompt templates (`PromptTemplate`, `ChatPromptTemplate`, `MessagesPlaceholder`)
+- Output parsers (`JsonOutputParser`, `CommaSeparatedListOutputParser`)
+- RAG pipeline (`Document`, `PyPDFLoader`, `WebBaseLoader`, `CharacterTextSplitter`, `RecursiveCharacterTextSplitter`, `WatsonxEmbeddings`, `Chroma`, retrievers, `ParentDocumentRetriever`, `RetrievalQA`)
+- Memory (`ChatMessageHistory`, `ConversationBufferMemory`)
+- Chains (`LLMChain`, `SequentialChain`, `RunnablePassthrough`)
+- Tools & agents (`Tool`, `@tool`, `create_react_agent`, `AgentExecutor`)

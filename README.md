@@ -64,5 +64,8 @@ Study notes for IBM's **RAG and Agentic AI Professional Certificate** (10 course
   - [05c_Understanding Coding.md](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/01_LangChain Core Components and Advanced Features/05c_Understanding Coding.md>) — exhaustive walkthrough of every LangChain concept in the lab (chat messages, RAG pipeline, memory, chains, tools, agents)
   - [05d_Understanding Coding (Simple English).md](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/01_LangChain Core Components and Advanced Features/05d_Understanding Coding (Simple English).md>) — same walkthrough as 05c, rewritten in plain, everyday language
   - [06_Practice Assignement.md](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/01_LangChain Core Components and Advanced Features/06_Practice Assignement.md>)
+- **02_Module Summary and Evaluation**
+  - [01_Summary and Highlights.md](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/02_Module Summary and Evaluation/01_Summary and Highlights.md>)
+  - [02_Cheat Sheet.md](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/02_Module Summary and Evaluation/02_Cheat Sheet.md>)
 
 _(Index updated as notes are added.)_
