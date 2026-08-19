@@ -6,9 +6,9 @@ Runnable rewrite of the lab's Flask + LangChain project, swapping IBM watsonx.ai
 
 - `ollama_llm.py` — `OllamaLLM`, a minimal LangChain `LLM` wrapper that calls the local Ollama HTTP API. Stands in for `ChatWatsonx`.
 - `config.py` — model parameters and the two local model IDs (equivalent of the lab's `config.py`).
-- `model.py` — initializes the models, defines the Qwen ChatML prompt template, and exposes `qwen_small_response` / `qwen_large_response` (equivalent of the lab's `model.py`).
-- `llm_test.py` — sanity check that calls both models directly and prints their responses (equivalent of the lab's `llm_test.py`).
-- `app.py` — the Flask app with a `/generate` endpoint that calls a chosen model and parses its output as JSON via LangChain's `JsonOutputParser`.
+- `model.py` — initializes the models, defines the Qwen ChatML prompt template, the `AIResponse` Pydantic schema, and a `template | model | json_parser` chain that returns validated structured JSON directly. Exposes `qwen_small_response` / `qwen_large_response` (equivalent of the lab's `model.py`, including the "Enhancing the JSON Structure" exercise — `category` and `action` fields in place of the original plain `response` field).
+- `llm_test.py` — sanity check that calls both models directly with a support-style message and prints their structured JSON responses (equivalent of the lab's `llm_test.py`).
+- `app.py` — the Flask app with a `/generate` endpoint that calls a chosen model and returns its already-parsed, schema-validated JSON response.
 
 ## Prerequisites
 
@@ -30,9 +30,9 @@ Then, in another terminal:
 ```bash
 curl -X POST http://127.0.0.1:5000/generate \
   -H "Content-Type: application/json" \
-  -d '{"prompt": "What is the capital of France? Respond as JSON with keys country and capital.", "model": "small"}'
+  -d '{"prompt": "My internet has been down for three days and no one has responded to my tickets.", "model": "small"}'
 ```
 
-`model` accepts `"small"` (`qwen2.5:7b`) or `"large"` (`qwen2.5:14b`).
+`model` accepts `"small"` (`qwen2.5:7b`) or `"large"` (`qwen2.5:14b`). The response is a JSON object matching the `AIResponse` schema: `summary`, `sentiment` (0–100), `category`, `action`.
 
-Verified end-to-end: both models return valid JSON via `JsonOutputParser`, and the endpoint's error paths (missing prompt, unknown model, non-JSON model output) all return the expected error responses.
+Verified end-to-end: both models return valid, schema-conforming JSON via the `template | model | json_parser` chain, and the endpoint's error paths (missing prompt, unknown model) return the expected error responses.

@@ -402,8 +402,137 @@ Expected output (paraphrased — exact wording varies per run):
 - **Granite:** The capital of Canada is Ottawa, known for historic architecture, museums, and a vibrant cultural scene — also home to that same Rideau Canal Skateway.
 - **Mistral:** The capital of Canada is Ottawa, one of the coldest capitals in the world, with winter temperatures dropping to -40°C, making the frozen Rideau Canal a popular skating destination.
 
+## Setting up JSON Outputs
+
+An important step: making sure the AI's output follows a well-defined format. This is essential for taking the output and integrating it seamlessly into other systems, like a website.
+
+Pydantic can define a clear schema for the AI's response, ensuring consistent structure and validation — enforcing the correct format and making data integration smoother and more reliable.
+
+```python
+from pydantic import BaseModel, Field
+from langchain_core.output_parsers import JsonOutputParser
+```
+
+`BaseModel` and `Field` define the JSON output structure. `JsonOutputParser` automatically parses and validates the AI's output into that structured format.
+
+### Pydantic Model
+
+```python
+# Define JSON output structure
+class AIResponse(BaseModel):
+    summary: str = Field(description="Summary of the user's message")
+    sentiment: int = Field(description="Sentiment score from 0 (negative) to 100 (positive)")
+    response: str = Field(description="Suggested response to the user")
+```
+
+### JSON Output Parser
+
+```python
+# JSON output parser
+json_parser = JsonOutputParser(pydantic_object=AIResponse)
+```
+
+The expected output is defined using the `AIResponse` Pydantic model, specifying fields like `summary`, `sentiment`, and `response`. `JsonOutputParser` ensures the AI output conforms to this structure, providing well-formatted, validated data for further use in the application.
+
+### Updating the Chain
+
+```python
+def get_ai_response(model, template, system_prompt, user_prompt):
+    chain = template | model | json_parser
+    return chain.invoke({'system_prompt': system_prompt, 'user_prompt': user_prompt, 'format_prompt': json_parser.get_format_instructions()})
+```
+
+`json_parser` is added to the chain, and `json_parser.get_format_instructions()` updates the prompt with instructions to respond in well-structured JSON as defined by the `AIResponse` class.
+
+### Putting it All Together
+
+`AIResponse` and `json_parser` go at the top of `model.py`, along with the extra `json_parser` link in the chain inside `get_ai_response`. The full file:
+
+```python
+from langchain_ibm import WatsonxLLM
+from langchain_ibm import ChatWatsonx
+from langchain_core.prompts import PromptTemplate
+from langchain_core.output_parsers import JsonOutputParser
+from pydantic import BaseModel, Field
+from config import PARAMETERS, CREDENTIALS, LLAMA_MODEL_ID, GRANITE_MODEL_ID, MISTRAL_MODEL_ID
+
+# Define JSON output structure
+class AIResponse(BaseModel):
+    summary: str = Field(description="Summary of the user's message")
+    sentiment: int = Field(description="Sentiment score from 0 (negative) to 100 (positive)")
+    response: str = Field(description="Suggested response to the user")
+
+# JSON output parser
+json_parser = JsonOutputParser(pydantic_object=AIResponse)
+
+# Function to initialize a model
+def initialize_model(model_id):
+    return ChatWatsonx(
+        model_id=model_id,
+        url="https://us-south.ml.cloud.ibm.com",
+        project_id="skills-network",
+        params=PARAMETERS
+    )
+
+# Initialize models
+llama_llm = initialize_model(LLAMA_MODEL_ID)
+granite_llm = initialize_model(GRANITE_MODEL_ID)
+mistral_llm = initialize_model(MISTRAL_MODEL_ID)
+
+# Prompt templates
+llama_template = PromptTemplate(
+    template='''<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+{system_prompt}\n{format_prompt}<|eot_id|><|start_header_id|>user<|end_header_id|>
+{user_prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+''',
+    input_variables=["system_prompt", "format_prompt", "user_prompt"]
+)
+
+granite_template = PromptTemplate(
+    template="System: {system_prompt}\n{format_prompt}\nHuman: {user_prompt}\nAI:",
+    input_variables=["system_prompt", "format_prompt", "user_prompt"]
+)
+
+mistral_template = PromptTemplate(
+    template="<s>[INST]{system_prompt}\n{format_prompt}\n{user_prompt}[/INST]",
+    input_variables=["system_prompt", "format_prompt", "user_prompt"]
+)
+
+def get_ai_response(model, template, system_prompt, user_prompt):
+    chain = template | model | json_parser
+    return chain.invoke({'system_prompt': system_prompt, 'user_prompt': user_prompt, 'format_prompt': json_parser.get_format_instructions()})
+
+# Model-specific response functions
+def llama_response(system_prompt, user_prompt):
+    return get_ai_response(llama_llm, llama_template, system_prompt, user_prompt)
+
+def granite_response(system_prompt, user_prompt):
+    return get_ai_response(granite_llm, granite_template, system_prompt, user_prompt)
+
+def mistral_response(system_prompt, user_prompt):
+    return get_ai_response(mistral_llm, mistral_template, system_prompt, user_prompt)
+```
+
+Note the Granite template switched from its earlier `<|system|>`/`<|user|>`/`<|assistant|>` special-token format to a plain `System:`/`Human:`/`AI:` format here — the lab doesn't call out why, but plain role labels tend to be more robust once a JSON-formatting instruction block gets inserted into the prompt.
+
+### Exercise: Enhancing the JSON Structure
+
+Add a new field to the `AIResponse` class that recommends the next step the support representative may take to resolve the issue:
+
+1. Update the `AIResponse` class in `model.py`.
+2. Modify the system prompt in `app.py` to include this new field.
+3. Test the changes with a variety of user messages.
+
+```python
+class AIResponse(BaseModel):
+    summary: str = Field(description="Summary of the user's message")
+    sentiment: int = Field(description="Sentiment score from 0 (negative) to 100 (positive)")
+    category: str = Field(description="Category of the inquiry (e.g., billing, technical, general)")
+    action: str = Field(description="Recommended action for the support rep")
+```
+
+> The exercise's target `AIResponse` also drops the `response` field in favor of `category` and `action` — matching the schema as given in the exercise text.
+
 ## Local Ollama Version
 
-The rest of this lab (building `/generate`'s AI logic, `JsonOutputParser`, and the full Flask app) continues with IBM watsonx.ai models, which need a paid IBM Cloud API key to run outside Skills Network's Cloud IDE. A working local version of this same project — same file structure, same LangChain patterns, rewired to local Ollama models — lives in [`local_ollama_app/`](<./local_ollama_app/>).
-
-_(This note covers the lab reading through the point where the local Cloud IDE session content ended. If Coursera's page continues further — completing `/generate`, the JSON output parser, and final testing — paste that content in and it'll be appended here.)_
+The rest of this lab (the full Flask app's `/generate` route, wired end-to-end with the JSON-structured chain above) continues with IBM watsonx.ai models, which need a paid IBM Cloud API key to run outside Skills Network's Cloud IDE. A working local version of this same project — same file structure, same LangChain patterns, rewired to local Ollama models, including the Pydantic/`JsonOutputParser` structured-output step and the exercise's extended schema — lives in [`local_ollama_app/`](<./local_ollama_app/>).

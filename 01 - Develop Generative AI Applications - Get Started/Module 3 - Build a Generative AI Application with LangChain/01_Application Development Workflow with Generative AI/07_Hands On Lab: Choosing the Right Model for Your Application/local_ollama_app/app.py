@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-from langchain_core.output_parsers import JsonOutputParser
 from model import qwen_small_response, qwen_large_response
 
 app = Flask(__name__)
@@ -9,11 +8,12 @@ MODEL_RESPONSE_FUNCS = {
     "large": qwen_large_response,
 }
 
-json_parser = JsonOutputParser()
-
-STRUCTURED_SYSTEM_PROMPT = (
-    "You are a helpful assistant. Respond ONLY with a single valid JSON object "
-    "that answers the user's question. Do not include any text outside the JSON."
+# Matches model.py's AIResponse schema: summary, sentiment, category, action.
+SUPPORT_SYSTEM_PROMPT = (
+    "You are a customer support triage assistant. Given the customer's message, "
+    "summarize it, score its sentiment, classify its category (e.g. billing, "
+    "technical, general), and recommend the next action a support representative "
+    "should take."
 )
 
 
@@ -29,12 +29,11 @@ def generate():
         return jsonify({"error": f"Unknown model '{model_choice}', use 'small' or 'large'"}), 400
 
     response_func = MODEL_RESPONSE_FUNCS[model_choice]
-    raw_output = response_func(STRUCTURED_SYSTEM_PROMPT, user_prompt)
 
     try:
-        parsed = json_parser.parse(raw_output)
-    except Exception:
-        return jsonify({"error": "Model did not return valid JSON", "raw_output": raw_output}), 502
+        parsed = response_func(SUPPORT_SYSTEM_PROMPT, user_prompt)
+    except Exception as exc:
+        return jsonify({"error": "Model did not return valid JSON", "detail": str(exc)}), 502
 
     return jsonify(parsed)
 
