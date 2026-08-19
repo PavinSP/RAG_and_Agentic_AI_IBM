@@ -57,5 +57,6 @@ Study notes for IBM's **RAG and Agentic AI Professional Certificate** (10 course
 - **01_LangChain Core Components and Advanced Features**
   - [01_Recap - Introduction to LangChain.md](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/01_LangChain Core Components and Advanced Features/01_Recap - Introduction to LangChain.md>)
   - [02_LangChain Core Concepts.md](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/01_LangChain Core Components and Advanced Features/02_LangChain Core Concepts.md>)
+  - [03_LangChain Chains and Agents for Building Applications.md](<01 - Develop Generative AI Applications - Get Started/Module 2 - Introduction to LangChain in GenAI Applications/01_LangChain Core Components and Advanced Features/03_LangChain Chains and Agents for Building Applications.md>)
 
 _(Index updated as notes are added.)_
