@@ -73,5 +73,6 @@ Study notes for IBM's **RAG and Agentic AI Professional Certificate** (10 course
 
 - **01_Application Development Workflow with Generative AI**
   - [01_Choose the Right AI Model for Your Use Case.md](<01 - Develop Generative AI Applications - Get Started/Module 3 - Build a Generative AI Application with LangChain/01_Application Development Workflow with Generative AI/01_Choose the Right AI Model for Your Use Case.md>)
+  - [02_ From Idea to AI: Building Applications with Generative AI.md](<01 - Develop Generative AI Applications - Get Started/Module 3 - Build a Generative AI Application with LangChain/01_Application Development Workflow with Generative AI/02_ From Idea to AI: Building Applications with Generative AI.md>)
 
 _(Index updated as notes are added.)_
